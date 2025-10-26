@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+GOT_FILE="$HOME/.usergot"
+[ ! -f "$GOT_FILE" ] && touch "$GOT_FILE"
+
+if ! declare -f got >/dev/null 2>&1; then
+    got() {
+        if [ $# -eq 0 ]; then
+            echo "Usage:"
+            echo "  got <key>        - cd into stored path for <key>"
+            echo "  got -a <key>     - add current directory as value for <key>"
+            echo "  got -r <key>     - remove <key>"
+            echo "  got -o <key>     - overwrite (or add) <key> with current directory"
+            return 1
+        fi
+
+        case "$1" in
+            -a)
+            key="$2"
+            if [ -z "$key" ]; then
+                    usage
+                    return 1
+                fi
+                if grep -q "^$key " "$GOT_FILE"; then
+                    echo "Key '$key' already exists. Use -o to overwrite."
+                    return 1
+                fi
+                echo "$key \"$(pwd)/\"" >> "$GOT_FILE"
+                echo "Added '$key' -> $(pwd)/"
+                ;;
+            -r)
+                key="$2"
+                if [ -z "$key" ]; then
+                    usage
+                    return 1
+                fi
+                if grep -q "^$key " "$GOT_FILE"; then
+                    grep -v "^$key " "$GOT_FILE" > "$GOT_FILE.tmp" && mv "$GOT_FILE.tmp" "$GOT_FILE"
+                    echo "Removed '$key'."
+                else
+                    echo "Key '$key' doesn't exist."
+                    return 1
+                fi
+                ;;
+            -o)
+                key="$2"
+                if [ -z "$key" ]; then
+                    echo "Please provide a key to overwrite/add."
+                    return 1
+                fi
+                grep -v "^$key " "$GOT_FILE" > "$GOT_FILE.tmp" && mv "$GOT_FILE.tmp" "$GOT_FILE"
+                echo "$key \"$(pwd)/\"" >> "$GOT_FILE"
+                echo "Set '$key' -> $(pwd)/"
+                ;;
+            *)
+                key="$1"
+                value=$(grep "^$key " "$GOT_FILE" | sed -E 's/^[^"]*"([^"]*)".*/\1/')
+                if [ -n "$value" ]; then
+                    cd "$value"
+                else
+                    echo "Key doesn't exist."
+                    return 1
+                fi
+                ;;
+        esac
+    }
+
+    export -f got
+fi
+
+
