@@ -11,6 +11,7 @@ if ! declare -f got >/dev/null 2>&1; then
             echo "  got -a <key>     - add current directory as value for <key>"
             echo "  got -r <key>     - remove <key>"
             echo "  got -o <key>     - overwrite (or add) <key> with current directory"
+            echo "  got -l           - list existing keys"
             return 1
         fi
 
@@ -51,6 +52,9 @@ if ! declare -f got >/dev/null 2>&1; then
                 grep -v "^$key " "$GOT_FILE" > "$GOT_FILE.tmp" && mv "$GOT_FILE.tmp" "$GOT_FILE"
                 echo "$key \"$(pwd)/\"" >> "$GOT_FILE"
                 echo "Set '$key' -> $(pwd)/"
+                ;;
+            -l)
+                cat "$GOT_FILE"
                 ;;
             *)
                 key="$1"
