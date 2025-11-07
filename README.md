@@ -46,3 +46,12 @@ For example, you can overwrite the Documents directory saved as 'docs' with the 
 ```
 /home/johndoe/Music $ got -o docs
 ```
+
+### Listing directories
+
+You can list all stored keys and associated directories with the `-l` flag.
+```
+~ $ got -l
+docs /home/johndoe/Documents
+music /home/johndoe/Music
+```
