@@ -5,11 +5,11 @@ Paths can be stored as short keys, allowing you to quickly navigate to a specifi
 Yes, this can already be done with symlinks, aliasing, etc.. but this is more-or-less just a product of me trying to further improve my ability to use a shell proficiently, and I figured I'd share it in-case it's of any use to others.
 
 ## Usage
-The tool is used by adding the file to your bash source:
+The tool is enabled by executing `got` from your terminal, which will add the function to your session:
 ```
 ~ $ source "/path/to/file/got"
 ```
-This line can also be added to `~/.bashrc` to be loaded on login.
+This line can also be added to `~/.bashrc`/`~/.zshrc` to be loaded on a new terminal session.
 All keys/paths added are saved to `~/.usergot`. This can be changed as of now by altering the location in the script.
 
 ### Saving directories
