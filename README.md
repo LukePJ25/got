@@ -27,8 +27,8 @@ Navigating to your Documents folder from anywhere will then be as easy as doing:
 /home/johndoe/Documents $
 ```
 
-### Removing directories
-You can remove a directory by using the `-r` flag. E.g.:
+### Removing directory keys
+You can remove a directory key by using the `-r` flag. E.g.:
 ```
 ~ $ got -r <key>
 ```
@@ -37,8 +37,8 @@ For example, you can remove your Documents directory saved as 'docs' with:
 ~ $ got -r docs
 ```
 
-### Overwriting directories
-You can overwrite the directory for an existing key by using the `-o` flag. This will overwrite the current path stored for the given key with your present working directory.
+### Overwriting directory keys
+You can overwrite the directory stored as an existing key by using the `-o` flag. This will overwrite the current directory stored for the given key with your present working directory.
 ```
 ~ $ got -o <new key>
 ```
